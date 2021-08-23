@@ -1,7 +1,7 @@
 
-// NOTE: This file is essentially the same as
-// https://github.com/CesiumGS/cesium-unreal/blob/main/extern/CMakeLists.txt
-// except for the project name. I'm lazy.
+# NOTE: This file is essentially the same as
+# https://github.com/CesiumGS/cesium-unreal/blob/main/extern/CMakeLists.txt
+# except for the project name. I'm lazy.
 
 cmake_minimum_required(VERSION 3.15)
 
