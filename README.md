@@ -1,6 +1,6 @@
 # cesium-cpp
 
-Internal tests for cesium-native
+A small test project for [`cesium-native`](https://github.com/CesiumGS/cesium-native).
 
 ---
 
@@ -18,15 +18,16 @@ Create makefiles:
 
     cmake -B build -S . -G "Visual Studio 16 2019" -A x64
     
-Open `build/cesium-cpp.sln` with visual studio and look at
-a pile of messy code in `CesiumCppMain.cpp`.
-
-Compile it, and run the resulting executable:
+Open `build/cesium-cpp.sln` with visual studio, compile it, 
+and run the resulting executable:
 
     cd build
     cd Debug
     cesium-cpp.exe
     
-    
+It will print a short usage hint. In order to read all glTF sample models
+from a local directory (that contains the `model-index.json` file), use
+
+    cesium-cpp -gltf C:/Samples/
 
     
