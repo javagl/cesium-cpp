@@ -3,10 +3,10 @@
 #include <chrono>
 #include <string>
 
-#include "Cesium3DTilesSelection/TileID.h"
-#include "Cesium3DTilesSelection/ViewState.h"
-#include "Cesium3DTilesSelection/ViewUpdateResult.h"
-#include "Cesium3DTilesSelection/TilesetExternals.h"
+#include <Cesium3DTilesSelection/TileID.h>
+#include <Cesium3DTilesSelection/ViewState.h>
+#include <Cesium3DTilesSelection/ViewUpdateResult.h>
+#include <Cesium3DTilesSelection/TilesetExternals.h>
 
 namespace CesiumCpp {
 

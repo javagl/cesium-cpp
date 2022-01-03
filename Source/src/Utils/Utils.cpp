@@ -1,19 +1,18 @@
 
-#include "CesiumCppUtils.h"
+#include "Utils/Utils.h"
 
-#include "CesiumNative/FileAssetAccessor.h"
-#include "CesiumNative/NullResourcePreparer.h"
-#include "CesiumNative/SimpleTaskProcessorEx.h"
+#include "CesiumNativeImpl/FileAssetAccessor.h"
+#include "CesiumNativeImpl/NullResourcePreparer.h"
+#include "CesiumNativeImpl/SimpleTaskProcessorEx.h"
 
-#include "Cesium3DTilesSelection/Tile.h"
-#include "Cesium3DTilesSelection/TileID.h"
-#include "Cesium3DTilesSelection/ViewState.h"
-#include "Cesium3DTilesSelection/ViewUpdateResult.h"
-#include "Cesium3DTilesSelection/TilesetExternals.h"
+#include <Cesium3DTilesSelection/Tile.h>
+#include <Cesium3DTilesSelection/TileID.h>
+#include <Cesium3DTilesSelection/ViewState.h>
+#include <Cesium3DTilesSelection/ViewUpdateResult.h>
+#include <Cesium3DTilesSelection/TilesetExternals.h>
 
-#include "CesiumGeometry/OctreeTileID.h"
-#include "CesiumGeometry/QuadtreeTileID.h"
-
+#include <CesiumGeometry/OctreeTileID.h>
+#include <CesiumGeometry/QuadtreeTileID.h>
 
 #include <spdlog/spdlog.h>
 
@@ -32,9 +31,9 @@ namespace CesiumCpp {
 
 		Cesium3DTilesSelection::TilesetExternals createDefaultExternals() {
 		  Cesium3DTilesSelection::TilesetExternals externals{
-			  std::make_shared<CesiumCpp::CesiumNative::FileAssetAccessor>(),
-			  std::make_shared<CesiumCpp::CesiumNative::NullResourcePreparer>(),
-			  std::make_shared<CesiumCpp::CesiumNative::SimpleTaskProcessorEx>(0, true)
+			  std::make_shared<CesiumCpp::CesiumNativeImpl::FileAssetAccessor>(),
+			  std::make_shared<CesiumCpp::CesiumNativeImpl::NullResourcePreparer>(),
+			  std::make_shared<CesiumCpp::CesiumNativeImpl::SimpleTaskProcessorEx>(0, true)
 		  };
       return externals;
     }
