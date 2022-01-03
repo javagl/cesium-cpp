@@ -40,7 +40,8 @@ void printUsage() {
   std::cout << "Usage: " << std::endl;
   std::cout << "" << std::endl;
 
-  std::cout << "- Reading a tileset and doing an unspecified test: " << std::endl;
+  std::cout << "- Reading a tileset and doing an unspecified test: "
+            << std::endl;
   std::cout << "" << std::endl;
   std::cout << "  cesium-cpp -tileset C:/Example/tileset.json" << std::endl;
   std::cout << "" << std::endl;
@@ -54,9 +55,11 @@ void printUsage() {
 
   std::cout << "- Reading a specific glTF sample model: " << std::endl;
   std::cout << "" << std::endl;
-  std::cout << "  cesium-cpp -gltf C:/sampleModelsBaseDir/,MorphStressTest,glTF-Binary,MorphStressTest.glb" << std::endl;
+  std::cout << "  cesium-cpp -gltf "
+               "C:/sampleModelsBaseDir/"
+               ",MorphStressTest,glTF-Binary,MorphStressTest.glb"
+            << std::endl;
   std::cout << "" << std::endl;
-
 }
 
 int main(int argc, char **argv) {
@@ -77,19 +80,18 @@ int main(int argc, char **argv) {
   if (optionalGltfInput.has_value()) {
     const std::string gltfInput = optionalGltfInput.value();
     std::vector<std::string> tokens = tokenize(gltfInput, ",");
-    if (tokens.size() == 1)
-    {
+    if (tokens.size() == 1) {
       std::string baseUrl = tokens[0];
       CesiumCpp::GltfTests::testReadSampleModels(baseUrl);
       return 0;
     }
-    if (tokens.size() == 4)
-    {
+    if (tokens.size() == 4) {
       std::string baseUrl = tokens[0];
       std::string name = tokens[1];
       std::string variantName = tokens[2];
       std::string variantFileName = tokens[3];
-      CesiumCpp::GltfTests::testReadSampleModel(baseUrl, name, variantName, variantFileName);
+      CesiumCpp::GltfTests::testReadSampleModel(baseUrl, name, variantName,
+                                                variantFileName);
     }
     return 0;
   }
