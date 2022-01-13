@@ -59,14 +59,5 @@ namespace CesiumCpp {
      */
     void printViewUpdateResult(const Cesium3DTilesSelection::ViewUpdateResult& r);
 
-    /**
-     * @brief Create a short string for the given TileID
-     *
-     * The exact format is not specified.
-     *
-     * @param tileId The tile ID
-     * @return The string
-     */
-    std::string createTileIdString(const Cesium3DTilesSelection::TileID& tileId);
   } // namespace Utils
 } // namespace CesiumCpp

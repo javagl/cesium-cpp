@@ -88,7 +88,7 @@ namespace CesiumCpp {
       if (details) {
         for (auto const& tile : r.tilesToRenderThisFrame) {
           s << std::setw(w) << ""
-            << "  ID " << createTileIdString(tile->getTileID()) << " error "
+            << "  ID " << Cesium3DTilesSelection::TileIdUtilities::createTileIdString(tile->getTileID()) << " error "
             << tile->getGeometricError() << " height " << computeHeight(tile)
             << std::endl;
         }
@@ -113,25 +113,6 @@ namespace CesiumCpp {
       SPDLOG_INFO("ViewUpdateResult:\n" + viewUpdateResultToString(r));
     }
 
-    std::string createTileIdString(const Cesium3DTilesSelection::TileID& tileId) {
-      struct Operation {
-        std::string operator()(const std::string& id) { return id; }
-
-        // XXX TODO It's hard to return sensible strings for these...
-        std::string operator()(const CesiumGeometry::QuadtreeTileID& /*id*/) {
-          return "UNHANDLED IN createTileIdString!";
-        }
-
-        std::string operator()(const CesiumGeometry::OctreeTileID& /*id*/) {
-          return "UNHANDLED IN createTileIdString!";
-        }
-
-        std::string operator()(const CesiumGeometry::UpsampledQuadtreeNode /*id*/) {
-          return "UNHANDLED IN createTileIdString!";
-        }
-      };
-      return std::visit(Operation(), tileId);
-    }
   } // namespace Utils
 } // namespace CesiumCpp
 
