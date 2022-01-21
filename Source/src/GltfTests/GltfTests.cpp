@@ -106,18 +106,18 @@ bool testReadModel(const DataReader &dataReader, const std::string &name,
     const std::byte *dataBegin =
         reinterpret_cast<const std::byte *>(data.data());
     CesiumGltfReader::GltfReader gltfReader;
-    CesiumGltfReader::ModelReaderResult modelReaderResult =
-        gltfReader.readModel(gsl::span(dataBegin, data.size()));
-    bool success = modelReaderResult.model.has_value();
+    CesiumGltfReader::GltfReaderResult gltfReaderResult =
+        gltfReader.readGltf(gsl::span(dataBegin, data.size()));
+    bool success = gltfReaderResult.model.has_value();
     SPDLOG_INFO("Model {} variant {} : {}", name, variantName,
                 (success ? "PASSED" : " !!! FAILED !!! "));
-    if (!modelReaderResult.warnings.empty()) {
-      for (const auto &warning : modelReaderResult.warnings) {
+    if (!gltfReaderResult.warnings.empty()) {
+      for (const auto &warning : gltfReaderResult.warnings) {
         SPDLOG_WARN("    {}", warning);
       }
     }
-    if (!modelReaderResult.errors.empty()) {
-      for (const auto &error : modelReaderResult.errors) {
+    if (!gltfReaderResult.errors.empty()) {
+      for (const auto &error : gltfReaderResult.errors) {
         SPDLOG_ERROR("    {}", error);
       }
     }
