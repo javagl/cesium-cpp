@@ -153,9 +153,12 @@ void fullyLoad(
     return;
   }
   if (hasToLoadForImplicitTileset(tile, implicitInfo)) {
-    // This is not supposed to be called by clients,
-    // but ... there is no other option
-    tile.loadContent();
+    if (hasContent(tile, implicitInfo)) {
+      // This is not supposed to be called by clients,
+      // but ... there is no other option
+      tile.loadContent();
+      return;
+    }
     return;
   }
   if (hasContent(tile, implicitInfo)) {
@@ -174,6 +177,16 @@ void fullyLoad(
           });
 }
 
+/*
+void callUpdateView(Cesium3DTilesSelection::Tileset &tileset)
+{
+    glm::dvec3 position{0.0, 0.0, 0.0};
+    glm::dvec3 direction{0.0, 0.0, -1.0};
+    Cesium3DTilesSelection::ViewState viewState =
+        CesiumCpp::Utils::createViewState(position, direction);
+    tileset.updateView({viewState});
+}
+*/
 void fullyTraverse(
     Cesium3DTilesSelection::Tile *tile,
     const Cesium3DTilesSelection::ImplicitTraversalInfo &implicitInfo,

@@ -64,14 +64,6 @@ void printUsage() {
 
 int main(int argc, char **argv) {
 
-  /*/
-  std::string defaultTilesetUrl =
-      "C:/Develop/CesiumUnreal/cesium-cpp/Data/Icospheres/tileset.json";
-      //"C:/Develop/CesiumGS/3d-tiles-samples/next/SparseImplicitQuadtree/tileset.json";
-  CesiumCpp::TilesTests::runBasicCesiumNativeExample(defaultTilesetUrl);
-  if (true) return 0;
-  //*/
-
   std::optional<std::string> optionalTilesetUrl =
       findValue(argc, argv, "-tileset");
   if (optionalTilesetUrl.has_value()) {
@@ -99,6 +91,16 @@ int main(int argc, char **argv) {
     }
     return 0;
   }
+
+  //*/
+  std::string defaultTilesetUrl = "";
+  //defaultTilesetUrl = "C:/Develop/CesiumUnreal/cesium-cpp/Data/Icospheres/tileset.json";
+  defaultTilesetUrl = "C:/Develop/CesiumGS/3d-tiles-samples/1.1/SparseImplicitOctree/tileset.json";
+  //defaultTilesetUrl = "C:/Develop/CesiumGS/3d-tiles-samples/1.1/MetadataGranularities/tileset.json";
+  CesiumCpp::TilesTests::runBasicCesiumNativeExample(defaultTilesetUrl);
+  if (true) return 0;
+  //*/
+
   printUsage();
   return 0;
 }

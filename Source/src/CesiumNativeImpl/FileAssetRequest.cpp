@@ -29,7 +29,7 @@ FileAssetRequest::FileAssetRequest(
   // This may be sufficient for now, but in the future, it may have to
   // examine the contents.
   std::string actualExtension = std::filesystem::path(url).extension().string();
-  std::vector<std::string> extensions{".json", ".b3dm", ".cmpt", ".glTF", ".subtree"};
+  std::vector<std::string> extensions{".json", ".b3dm", ".cmpt", ".glTF", ".glb", ".subtree"};
   for (const std::string &extension : extensions) {
     if (actualExtension == extension) {
       std::string contentType = extension;

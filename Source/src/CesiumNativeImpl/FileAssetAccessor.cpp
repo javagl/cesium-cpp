@@ -11,10 +11,9 @@ namespace CesiumCpp {
 namespace CesiumNativeImpl {
 
 CesiumAsync::Future<std::shared_ptr<CesiumAsync::IAssetRequest>>
-FileAssetAccessor::requestAsset(
-    const CesiumAsync::AsyncSystem &asyncSystem, const std::string &url,
-    const std::vector<CesiumAsync::IAssetAccessor::THeader> & /*headers*/
-) {
+FileAssetAccessor::get(const CesiumAsync::AsyncSystem &asyncSystem,
+                       const std::string &url,
+                       const std::vector<THeader> &headers) {
   std::shared_ptr<CesiumAsync::IAssetRequest> value =
       std::make_shared<FileAssetRequest>("GET", url,
                                          CesiumAsync::HttpHeaders{});
@@ -25,12 +24,18 @@ FileAssetAccessor::requestAsset(
 }
 
 CesiumAsync::Future<std::shared_ptr<CesiumAsync::IAssetRequest>>
-FileAssetAccessor::post(const CesiumAsync::AsyncSystem &asyncSystem,
-                        const std::string &url,
-                        const std::vector<THeader> &headers,
-                        const gsl::span<const std::byte> & /*contentPayload*/) {
-  return this->requestAsset(asyncSystem, url, headers);
-};
+FileAssetAccessor::request(
+    const CesiumAsync::AsyncSystem &asyncSystem, const std::string &verb,
+    const std::string &url,
+    const std::vector<THeader> &headers,
+    const gsl::span<const std::byte> &contentPayload) {
+  std::shared_ptr<CesiumAsync::IAssetRequest> value =
+      std::make_shared<FileAssetRequest>(verb, url, CesiumAsync::HttpHeaders{});
+  CesiumAsync::Future<std::shared_ptr<CesiumAsync::IAssetRequest>> result =
+      asyncSystem.createResolvedFuture(
+          std::shared_ptr<CesiumAsync::IAssetRequest>(value));
+  return result;
+}
 
 void FileAssetAccessor::tick() noexcept {
   // Does nothing

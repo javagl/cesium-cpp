@@ -14,15 +14,14 @@ namespace CesiumNativeImpl {
 class FileAssetAccessor : public CesiumAsync::IAssetAccessor {
 public:
   CesiumAsync::Future<std::shared_ptr<CesiumAsync::IAssetRequest>>
-  requestAsset(const CesiumAsync::AsyncSystem &asyncSystem,
-               const std::string &url,
-               const std::vector<CesiumAsync::IAssetAccessor::THeader> &headers)
-      override;
+  get(const CesiumAsync::AsyncSystem &asyncSystem, const std::string &url,
+      const std::vector<THeader> &headers = {}) override;
 
-  CesiumAsync::Future<std::shared_ptr<CesiumAsync::IAssetRequest>>
-  post(const CesiumAsync::AsyncSystem &asyncSystem, const std::string &url,
-       const std::vector<THeader> &headers = std::vector<THeader>(),
-       const gsl::span<const std::byte> &contentPayload = {});
+  virtual CesiumAsync::Future<std::shared_ptr<CesiumAsync::IAssetRequest>>
+  request(const CesiumAsync::AsyncSystem &asyncSystem, const std::string &verb,
+          const std::string &url,
+          const std::vector<THeader> &headers = std::vector<THeader>(),
+          const gsl::span<const std::byte> &contentPayload = {}) override;
 
   void tick() noexcept override;
 };
