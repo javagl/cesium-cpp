@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Cesium3DTilesSelection/IPrepareRendererResources.h>
+#include <CesiumAsync/AsyncSystem.h>
 
 #include <glm/glm.hpp>
 
@@ -23,8 +24,11 @@ class NullResourcePreparer
 public:
   NullResourcePreparer();
 
-  void *prepareInLoadThread(const CesiumGltf::Model &model,
-                            const glm::dmat4 &transform) override;
+  CesiumAsync::Future<Cesium3DTilesSelection::TileLoadResultAndRenderResources>
+  prepareInLoadThread(const CesiumAsync::AsyncSystem &asyncSystem,
+                      Cesium3DTilesSelection::TileLoadResult &&tileLoadResult,
+                      const glm::dmat4 &transform,
+                      const std::any &rendererOptions) override;
 
   void *prepareInMainThread(Cesium3DTilesSelection::Tile &tile,
                             void *pLoadThreadResult) override;
@@ -32,11 +36,11 @@ public:
   void free(Cesium3DTilesSelection::Tile &tile, void *pLoadThreadResult,
             void *pMainThreadResult) noexcept override;
 
-  void *prepareRasterInLoadThread(const CesiumGltf::ImageCesium &image,
+  void *prepareRasterInLoadThread(CesiumGltf::ImageCesium &image,
                                   const std::any &rendererOptions) override;
 
   void *prepareRasterInMainThread(
-      const Cesium3DTilesSelection::RasterOverlayTile &rasterTile,
+      Cesium3DTilesSelection::RasterOverlayTile &rasterTile,
       void *pLoadThreadResult) override;
 
   void freeRaster(const Cesium3DTilesSelection::RasterOverlayTile &rasterTile,

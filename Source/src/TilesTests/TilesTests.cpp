@@ -76,7 +76,7 @@ void runCameraFlightExample(const std::string &tilesetUrl) {
 
 //============================================================================
 // EXPERIMENTAL STUFF START
-
+/*
 bool waitFor(const std::string &name, CesiumAsync::AsyncSystem &asyncSystem,
              uint32_t maxWaitTimeMs, std::function<bool()> condition) {
   uint32_t sleepMs = 50;
@@ -148,7 +148,7 @@ void fullyLoad(
     Cesium3DTilesSelection::Tile &tile,
     const Cesium3DTilesSelection::ImplicitTraversalInfo &implicitInfo) {
 
-  if (tile.getState() != Cesium3DTilesSelection::Tile::LoadState::Unloaded) {
+  if (tile.getState() != Cesium3DTilesSelection::TileLoadState::Unloaded) {
     // Nothing to do here, I guess...
     return;
   }
@@ -165,8 +165,8 @@ void fullyLoad(
     tile.loadContent();
     return;
   }
-  if (tile.getState() == Cesium3DTilesSelection::Tile::LoadState::Unloaded) {
-    tile.setState(Cesium3DTilesSelection::Tile::LoadState::ContentLoaded);
+  if (tile.getState() == Cesium3DTilesSelection::TileLoadState::Unloaded) {
+    tile.setState(Cesium3DTilesSelection::TileLoadState::ContentLoaded);
   }
 
   uint32_t maxWaitTimeMs = 1000;
@@ -177,7 +177,7 @@ void fullyLoad(
           });
 }
 
-/*
+/ *
 void callUpdateView(Cesium3DTilesSelection::Tileset &tileset)
 {
     glm::dvec3 position{0.0, 0.0, 0.0};
@@ -186,7 +186,7 @@ void callUpdateView(Cesium3DTilesSelection::Tileset &tileset)
         CesiumCpp::Utils::createViewState(position, direction);
     tileset.updateView({viewState});
 }
-*/
+* /
 void fullyTraverse(
     Cesium3DTilesSelection::Tile *tile,
     const Cesium3DTilesSelection::ImplicitTraversalInfo &implicitInfo,
@@ -249,7 +249,7 @@ void runTraversalExample(const std::string &tilesetUrl) {
     SPDLOG_CRITICAL("Unhandled error: {0}", e.what());
   }
 }
-
+*/
 // EXPERIMENTAL STUFF END
 //============================================================================
 
@@ -257,8 +257,8 @@ void runBasicCesiumNativeExample(const std::string &tilesetUrl) {
 
   SPDLOG_INFO("Hello cesium-native!");
 
-  //runCameraFlightExample(tilesetUrl);
-  runTraversalExample(tilesetUrl);
+  runCameraFlightExample(tilesetUrl);
+  //runTraversalExample(tilesetUrl);
 
   SPDLOG_INFO("Bye cesium-native!");
 }

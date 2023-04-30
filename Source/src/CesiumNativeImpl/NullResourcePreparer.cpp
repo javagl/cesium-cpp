@@ -9,11 +9,15 @@ NullResourcePreparer::NullResourcePreparer() {
   // Nothingto do here
 }
 
-void *
-NullResourcePreparer::prepareInLoadThread(const CesiumGltf::Model & /*model*/,
-                                          const glm::dmat4 & /*transform*/) {
+CesiumAsync::Future<Cesium3DTilesSelection::TileLoadResultAndRenderResources>
+NullResourcePreparer::prepareInLoadThread(
+    const CesiumAsync::AsyncSystem &asyncSystem,
+    Cesium3DTilesSelection::TileLoadResult &&tileLoadResult,
+    const glm::dmat4 &transform, const std::any &rendererOptions) {
   SPDLOG_TRACE("Called NullResourcePreparer::prepareInLoadThread");
-  return nullptr;
+  return asyncSystem.createResolvedFuture(
+      Cesium3DTilesSelection::TileLoadResultAndRenderResources{
+          std::move(tileLoadResult), nullptr});
 }
 
 void *NullResourcePreparer::prepareInMainThread(
@@ -29,14 +33,14 @@ void NullResourcePreparer::free(Cesium3DTilesSelection::Tile & /*tile*/,
 }
 
 void *NullResourcePreparer::prepareRasterInLoadThread(
-    const CesiumGltf::ImageCesium & /*image*/,
+    CesiumGltf::ImageCesium & /*image*/,
     const std::any & /* rendererOptions */) {
   SPDLOG_TRACE("Called NullResourcePreparer::prepareRasterInLoadThread");
   return nullptr;
 }
 
 void *NullResourcePreparer::prepareRasterInMainThread(
-    const Cesium3DTilesSelection::RasterOverlayTile & /*rasterTile*/,
+    Cesium3DTilesSelection::RasterOverlayTile & /*rasterTile*/,
     void * /*pLoadThreadResult*/) {
   SPDLOG_TRACE("Called NullResourcePreparer::prepareRasterInMainThread");
   return nullptr;

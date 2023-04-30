@@ -94,15 +94,6 @@ namespace CesiumCpp {
         }
       }
 
-      s << std::setw(w) << "tilesToNoLongerRenderThisFrame : "
-        << r.tilesToNoLongerRenderThisFrame.size() << std::endl;
-      s << std::setw(w) << "tilesLoadingLowPriority : " << r.tilesLoadingLowPriority
-        << std::endl;
-      s << std::setw(w)
-        << "tilesLoadingMediumPriority : " << r.tilesLoadingMediumPriority
-        << std::endl;
-      s << std::setw(w)
-        << "tilesLoadingHighPriority : " << r.tilesLoadingHighPriority << std::endl;
       s << std::setw(w) << "tilesVisited : " << r.tilesVisited << std::endl;
       s << std::setw(w) << "tilesCulled : " << r.tilesCulled << std::endl;
       s << std::setw(w) << "maxDepthVisited : " << r.maxDepthVisited << std::endl;
