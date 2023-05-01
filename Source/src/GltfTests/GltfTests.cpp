@@ -2,6 +2,8 @@
 
 #include "Common/Common.h"
 
+#include <CesiumGltf/ExtensionKhrMaterialsVariants.h>
+#include <CesiumGltf/ExtensionKhrMaterialsVariantsMeshPrimitive.h>
 #include <CesiumGltfReader/GltfReader.h>
 
 #include <spdlog/spdlog.h>
@@ -97,6 +99,63 @@ processVariants(const std::string &name, const rapidjson::Value &variants) {
   return sampleModelVariants;
 }
 
+void printMaterialVariantsInfo(const CesiumGltf::Model &model) {
+
+  SPDLOG_INFO("Material variants info");
+
+  bool isPresentOnGltf =
+      model.hasExtension<CesiumGltf::ExtensionKhrMaterialsVariants>();
+  SPDLOG_INFO("  Extension present on glTF? {}", isPresentOnGltf);
+  if (!isPresentOnGltf) {
+    // return;
+  }
+  const CesiumGltf::ExtensionKhrMaterialsVariants *materialVariantsGltf =
+      model.getExtension<CesiumGltf::ExtensionKhrMaterialsVariants>();
+  const std::vector<CesiumGltf::ExtensionKhrMaterialsVariantsValue> variants =
+      materialVariantsGltf->variants;
+  for (const CesiumGltf::ExtensionKhrMaterialsVariantsValue &variant :
+       variants) {
+    SPDLOG_INFO("    Variant name: {}", variant.name);
+  }
+
+  const std::vector<CesiumGltf::Mesh> meshes = model.meshes;
+  for (size_t m = 0; m < meshes.size(); m++) {
+    const CesiumGltf::Mesh &mesh = meshes[m];
+    const std::vector<CesiumGltf::MeshPrimitive> meshPrimitives =
+        mesh.primitives;
+    for (size_t p = 0; p < meshPrimitives.size(); p++) {
+      const CesiumGltf::MeshPrimitive &meshPrimitive = meshPrimitives[p];
+      bool isPresentOnMeshPrimitive =
+          meshPrimitive
+              .hasExtension<CesiumGltf::ExtensionKhrMaterialsVariants>();
+      SPDLOG_INFO("  Extension present on mesh primitive {} of mesh {}? {}", p,
+                  m, isPresentOnMeshPrimitive);
+      if (!isPresentOnMeshPrimitive) {
+        continue;
+      }
+      const CesiumGltf::ExtensionKhrMaterialsVariantsMeshPrimitive
+          *materialVariants = meshPrimitive.getExtension<
+              CesiumGltf::ExtensionKhrMaterialsVariantsMeshPrimitive>();
+      const std::vector<
+          CesiumGltf::ExtensionKhrMaterialsVariantsMeshPrimitiveMappingsValue>
+          mappings = materialVariants->mappings;
+      for (const CesiumGltf::
+               ExtensionKhrMaterialsVariantsMeshPrimitiveMappingsValue
+                   &mapping : mappings) {
+        SPDLOG_INFO("    Mapping:");
+
+        SPDLOG_INFO("      Variant:");
+        const std::vector<int32_t> mappingVariants = mapping.variants;
+        for (const int32_t mappingVariant : mappingVariants) {
+          SPDLOG_INFO("        {}", mappingVariant);
+        }
+        SPDLOG_INFO("      Material: {}", mapping.material);
+        SPDLOG_INFO("      Name: {}", mapping.name.value_or("(none)"));
+      }
+    }
+  }
+}
+
 bool testReadModel(const DataReader &dataReader, const std::string &name,
                    const std::string &variantName,
                    const std::string &variantFileName) {
@@ -109,6 +168,9 @@ bool testReadModel(const DataReader &dataReader, const std::string &name,
     CesiumGltfReader::GltfReaderResult gltfReaderResult =
         gltfReader.readGltf(gsl::span(dataBegin, data.size()));
     bool success = gltfReaderResult.model.has_value();
+    if (success) {
+      printMaterialVariantsInfo(*gltfReaderResult.model);
+    };
     SPDLOG_INFO("Model {} variant {} : {}", name, variantName,
                 (success ? "PASSED" : " !!! FAILED !!! "));
     if (!gltfReaderResult.warnings.empty()) {
