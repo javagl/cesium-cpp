@@ -107,7 +107,7 @@ void printMaterialVariantsInfo(const CesiumGltf::Model &model) {
       model.hasExtension<CesiumGltf::ExtensionKhrMaterialsVariants>();
   SPDLOG_INFO("  Extension present on glTF? {}", isPresentOnGltf);
   if (!isPresentOnGltf) {
-    // return;
+    return;
   }
   const CesiumGltf::ExtensionKhrMaterialsVariants *materialVariantsGltf =
       model.getExtension<CesiumGltf::ExtensionKhrMaterialsVariants>();
