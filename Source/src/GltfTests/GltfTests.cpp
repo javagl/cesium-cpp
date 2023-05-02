@@ -2,8 +2,8 @@
 
 #include "Common/Common.h"
 
-#include <CesiumGltf/ExtensionKhrMaterialsVariants.h>
-#include <CesiumGltf/ExtensionKhrMaterialsVariantsMeshPrimitive.h>
+#include <CesiumGltf/ExtensionMeshPrimitiveKhrMaterialsVariants.h>
+#include <CesiumGltf/ExtensionModelKhrMaterialsVariants.h>
 #include <CesiumGltfReader/GltfReader.h>
 
 #include <spdlog/spdlog.h>
@@ -104,16 +104,16 @@ void printMaterialVariantsInfo(const CesiumGltf::Model &model) {
   SPDLOG_INFO("Material variants info");
 
   bool isPresentOnGltf =
-      model.hasExtension<CesiumGltf::ExtensionKhrMaterialsVariants>();
+      model.hasExtension<CesiumGltf::ExtensionModelKhrMaterialsVariants>();
   SPDLOG_INFO("  Extension present on glTF? {}", isPresentOnGltf);
   if (!isPresentOnGltf) {
     return;
   }
-  const CesiumGltf::ExtensionKhrMaterialsVariants *materialVariantsGltf =
-      model.getExtension<CesiumGltf::ExtensionKhrMaterialsVariants>();
-  const std::vector<CesiumGltf::ExtensionKhrMaterialsVariantsValue> variants =
-      materialVariantsGltf->variants;
-  for (const CesiumGltf::ExtensionKhrMaterialsVariantsValue &variant :
+  const CesiumGltf::ExtensionModelKhrMaterialsVariants *materialVariantsGltf =
+      model.getExtension<CesiumGltf::ExtensionModelKhrMaterialsVariants>();
+  const std::vector<CesiumGltf::ExtensionModelKhrMaterialsVariantsValue>
+      variants = materialVariantsGltf->variants;
+  for (const CesiumGltf::ExtensionModelKhrMaterialsVariantsValue &variant :
        variants) {
     SPDLOG_INFO("    Variant name: {}", variant.name);
   }
@@ -125,22 +125,21 @@ void printMaterialVariantsInfo(const CesiumGltf::Model &model) {
         mesh.primitives;
     for (size_t p = 0; p < meshPrimitives.size(); p++) {
       const CesiumGltf::MeshPrimitive &meshPrimitive = meshPrimitives[p];
-      bool isPresentOnMeshPrimitive =
-          meshPrimitive
-              .hasExtension<CesiumGltf::ExtensionKhrMaterialsVariants>();
+      bool isPresentOnMeshPrimitive = meshPrimitive.hasExtension<
+          CesiumGltf::ExtensionMeshPrimitiveKhrMaterialsVariants>();
       SPDLOG_INFO("  Extension present on mesh primitive {} of mesh {}? {}", p,
                   m, isPresentOnMeshPrimitive);
       if (!isPresentOnMeshPrimitive) {
         continue;
       }
-      const CesiumGltf::ExtensionKhrMaterialsVariantsMeshPrimitive
+      const CesiumGltf::ExtensionMeshPrimitiveKhrMaterialsVariants
           *materialVariants = meshPrimitive.getExtension<
-              CesiumGltf::ExtensionKhrMaterialsVariantsMeshPrimitive>();
+              CesiumGltf::ExtensionMeshPrimitiveKhrMaterialsVariants>();
       const std::vector<
-          CesiumGltf::ExtensionKhrMaterialsVariantsMeshPrimitiveMappingsValue>
+          CesiumGltf::ExtensionMeshPrimitiveKhrMaterialsVariantsMappingsValue>
           mappings = materialVariants->mappings;
       for (const CesiumGltf::
-               ExtensionKhrMaterialsVariantsMeshPrimitiveMappingsValue
+               ExtensionMeshPrimitiveKhrMaterialsVariantsMappingsValue
                    &mapping : mappings) {
         SPDLOG_INFO("    Mapping:");
 
