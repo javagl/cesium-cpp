@@ -7,100 +7,43 @@
 #include <iostream>
 #include <string>
 
-std::optional<std::string> findValue(int argc, char **argv,
-                                     const std::string &option) {
-  for (int i = 0; i < argc; i++) {
-    std::string s(argv[i]);
-    if (s == option) {
-      if (i < argc - 1) {
-        return std::string(argv[i + 1]);
-      }
-    }
-  }
-  return std::nullopt;
+#include <glm/glm.hpp>
+#include <glm/gtx/string_cast.hpp>
+
+#include <Cesium3DTilesContent/registerAllTileContentTypes.h>
+
+#include <Cesium3DTilesSelection/Tileset.h>
+#include <Cesium3DTilesSelection/TilesetExternals.h>
+
+void runViewUpdate(Cesium3DTilesSelection::Tileset &tileset,
+                   const glm::dvec3 position, const glm::dvec3 direction) {
+
+  std::cout << "Run view update" << std::endl;
+  std::cout << "  position : " << glm::to_string(position) << std::endl;
+  std::cout << "  direction: " << glm::to_string(direction) << std::endl;
+
+  Cesium3DTilesSelection::ViewState viewState =
+      CesiumCpp::Utils::createViewState(position, direction);
+  Cesium3DTilesSelection::ViewUpdateResult r =
+      tileset.updateViewOffline({viewState});
+  CesiumCpp::Utils::printViewUpdateResult(r);
 }
 
-std::vector<std::string> tokenize(const std::string &s,
-                                  const std::string &delimiter) {
-  std::vector<std::string> tokens;
-  size_t start = 0;
-  size_t end = s.find(delimiter);
-  while (end != std::string::npos) {
-    std::string token = s.substr(start, end - start);
-    tokens.push_back(token);
-    start = end + delimiter.length();
-    end = s.find(delimiter, start);
-  }
-  std::string token = s.substr(start);
-  tokens.push_back(token);
-  return tokens;
+void testExternalLoading(const std::string &tilesetUrl) {
+
+  Cesium3DTilesContent::registerAllTileContentTypes();
+  Cesium3DTilesSelection::TilesetExternals externals =
+      CesiumCpp::Utils::createDefaultExternals();
+  externals.pLogger->set_level(spdlog::level::trace);
+  Cesium3DTilesSelection::TilesetOptions options;
+  Cesium3DTilesSelection::Tileset tileset(externals, tilesetUrl, options);
+
+  runViewUpdate(tileset, {0.0, 0.0, 5.0}, {0.0, 0.0, -1.0});
+  runViewUpdate(tileset, {3.0, 0.0, 0.0}, {0.0, 0.0, -1.0});
 }
-
-void printUsage() {
-  std::cout << "Usage: " << std::endl;
-  std::cout << "" << std::endl;
-
-  std::cout << "- Reading a tileset and doing an unspecified test: "
-            << std::endl;
-  std::cout << "" << std::endl;
-  std::cout << "  cesium-cpp -tileset C:/Example/tileset.json" << std::endl;
-  std::cout << "" << std::endl;
-
-  std::cout << "" << std::endl;
-
-  std::cout << "- Reading all glTF sample models: " << std::endl;
-  std::cout << "" << std::endl;
-  std::cout << "  cesium-cpp -gltf C:/sampleModelsBaseDir/" << std::endl;
-  std::cout << "" << std::endl;
-
-  std::cout << "- Reading a specific glTF sample model: " << std::endl;
-  std::cout << "" << std::endl;
-  std::cout << "  cesium-cpp -gltf "
-               "C:/sampleModelsBaseDir/"
-               ",MorphStressTest,glTF-Binary,MorphStressTest.glb"
-            << std::endl;
-  std::cout << "" << std::endl;
-}
-
 int main(int argc, char **argv) {
 
-  std::optional<std::string> optionalTilesetUrl =
-      findValue(argc, argv, "-tileset");
-  if (optionalTilesetUrl.has_value()) {
-    const std::string tilesetUrl = optionalTilesetUrl.value();
-    CesiumCpp::TilesTests::runBasicCesiumNativeExample(tilesetUrl);
-    return 0;
-  }
-
-  std::optional<std::string> optionalGltfInput = findValue(argc, argv, "-gltf");
-  if (optionalGltfInput.has_value()) {
-    const std::string gltfInput = optionalGltfInput.value();
-    std::vector<std::string> tokens = tokenize(gltfInput, ",");
-    if (tokens.size() == 1) {
-      std::string baseUrl = tokens[0];
-      CesiumCpp::GltfTests::testReadSampleModels(baseUrl);
-      return 0;
-    }
-    if (tokens.size() == 4) {
-      std::string baseUrl = tokens[0];
-      std::string name = tokens[1];
-      std::string variantName = tokens[2];
-      std::string variantFileName = tokens[3];
-      CesiumCpp::GltfTests::testReadSampleModel(baseUrl, name, variantName,
-                                                variantFileName);
-    }
-    return 0;
-  }
-
-  //*/
-  std::string defaultTilesetUrl = "";
-  //defaultTilesetUrl = "C:/Develop/CesiumUnreal/cesium-cpp/Data/Icospheres/tileset.json";
-  defaultTilesetUrl = "C:/Develop/CesiumGS/3d-tiles-samples/1.1/SparseImplicitOctree/tileset.json";
-  //defaultTilesetUrl = "C:/Develop/CesiumGS/3d-tiles-samples/1.1/MetadataGranularities/tileset.json";
-  CesiumCpp::TilesTests::runBasicCesiumNativeExample(defaultTilesetUrl);
-  if (true) return 0;
-  //*/
-
-  printUsage();
+  const std::string url = "C:/Data/externalsWithTransform/tileset.json";
+  testExternalLoading(url);
   return 0;
 }
