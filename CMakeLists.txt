@@ -36,6 +36,8 @@ target_include_directories(${TARGET}
 
 target_link_libraries(${TARGET}
     PUBLIC
+        Cesium3DTilesContent
+        Cesium3DTilesReader
         Cesium3DTilesSelection
         CesiumAsync
         CesiumGeometry

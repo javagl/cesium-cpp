@@ -1,12 +1,13 @@
 #pragma once
 
 #include <Cesium3DTilesSelection/IPrepareRendererResources.h>
+#include <CesiumRasterOverlays/RasterOverlayTile.h>
 #include <CesiumAsync/AsyncSystem.h>
 
 #include <glm/glm.hpp>
 
 class Cesium3DTilesSelection::Tile;
-class Cesium3DTilesSelection::RasterOverlayTile;
+class CesiumRasterOverlays::RasterOverlayTile;
 class CesiumGltf::ImageCesium;
 class CesiumGltf::Model;
 class CesiumGeometry::Rectangle;
@@ -40,24 +41,24 @@ public:
                                   const std::any &rendererOptions) override;
 
   void *prepareRasterInMainThread(
-      Cesium3DTilesSelection::RasterOverlayTile &rasterTile,
+      CesiumRasterOverlays::RasterOverlayTile &rasterTile,
       void *pLoadThreadResult) override;
 
-  void freeRaster(const Cesium3DTilesSelection::RasterOverlayTile &rasterTile,
+  void freeRaster(const CesiumRasterOverlays::RasterOverlayTile &rasterTile,
                   void *pLoadThreadResult,
                   void *pMainThreadResult) noexcept override;
 
   void attachRasterInMainThread(
       const Cesium3DTilesSelection::Tile &tile,
       int32_t overlayTextureCoordinateID,
-      const Cesium3DTilesSelection::RasterOverlayTile &rasterTile,
+      const CesiumRasterOverlays::RasterOverlayTile &rasterTile,
       void *pMainThreadRendererResources, const glm::dvec2 &translation,
       const glm::dvec2 &scale) override;
 
   void detachRasterInMainThread(
       const Cesium3DTilesSelection::Tile &tile,
       int32_t overlayTextureCoordinateID,
-      const Cesium3DTilesSelection::RasterOverlayTile &rasterTile,
+      const CesiumRasterOverlays::RasterOverlayTile &rasterTile,
       void *pMainThreadRendererResources) noexcept override;
 };
 } // namespace CesiumNativeImpl

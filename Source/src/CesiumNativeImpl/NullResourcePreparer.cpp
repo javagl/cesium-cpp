@@ -40,14 +40,14 @@ void *NullResourcePreparer::prepareRasterInLoadThread(
 }
 
 void *NullResourcePreparer::prepareRasterInMainThread(
-    Cesium3DTilesSelection::RasterOverlayTile & /*rasterTile*/,
+    CesiumRasterOverlays::RasterOverlayTile & /*rasterTile*/,
     void * /*pLoadThreadResult*/) {
   SPDLOG_TRACE("Called NullResourcePreparer::prepareRasterInMainThread");
   return nullptr;
 }
 
 void NullResourcePreparer::freeRaster(
-    const Cesium3DTilesSelection::RasterOverlayTile & /*rasterTile*/,
+    const CesiumRasterOverlays::RasterOverlayTile & /*rasterTile*/,
     void * /*pLoadThreadResult*/, void * /*pMainThreadResult*/) noexcept {
   SPDLOG_TRACE("Called NullResourcePreparer::freeRaster");
 }
@@ -55,7 +55,7 @@ void NullResourcePreparer::freeRaster(
 void NullResourcePreparer::attachRasterInMainThread(
     const Cesium3DTilesSelection::Tile & /*tile*/,
     int32_t /*overlayTextureCoordinateID*/,
-    const Cesium3DTilesSelection::RasterOverlayTile & /*rasterTile*/,
+    const CesiumRasterOverlays::RasterOverlayTile & /*rasterTile*/,
     void * /*pMainThreadRendererResources*/, const glm::dvec2 & /*translation*/,
     const glm::dvec2 & /*scale*/
 ) {
@@ -65,7 +65,7 @@ void NullResourcePreparer::attachRasterInMainThread(
 void NullResourcePreparer::detachRasterInMainThread(
     const Cesium3DTilesSelection::Tile & /*tile*/,
     int32_t /*overlayTextureCoordinateID*/,
-    const Cesium3DTilesSelection::RasterOverlayTile & /*rasterTile*/,
+    const CesiumRasterOverlays::RasterOverlayTile & /*rasterTile*/,
     void * /*pMainThreadRendererResources*/
     ) noexcept {
   SPDLOG_TRACE("Called NullResourcePreparer::detachRasterInMainThread");

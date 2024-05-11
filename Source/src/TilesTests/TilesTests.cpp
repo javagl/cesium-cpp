@@ -3,7 +3,7 @@
 #include "Common/Common.h"
 #include "Utils/Utils.h"
 
-#include <Cesium3DTilesSelection/registerAllTileContentTypes.h>
+#include <Cesium3DTilesContent/registerAllTileContentTypes.h>
 
 #include <glm/gtx/string_cast.hpp>
 #include <spdlog/spdlog.h>
@@ -44,7 +44,7 @@ void runCameraFlightExample(const std::string &tilesetUrl) {
   // Start scope to see destructors called and handle uncaught errors
   try {
     SPDLOG_INFO("Calling Cesium3DTilesSelection::registerAllTileContentTypes");
-    Cesium3DTilesSelection::registerAllTileContentTypes();
+    Cesium3DTilesContent::registerAllTileContentTypes();
     SPDLOG_INFO(
         "Calling Cesium3DTilesSelection::registerAllTileContentTypes DONE");
 
