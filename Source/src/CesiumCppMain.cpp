@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
     return 0;
   }
 
-  //*/
+  /*/
   std::string defaultTilesetUrl = "";
   //defaultTilesetUrl = "C:/Develop/CesiumUnreal/cesium-cpp/Data/Icospheres/tileset.json";
   defaultTilesetUrl = "C:/Develop/CesiumGS/3d-tiles-samples/1.1/SparseImplicitOctree/tileset.json";
