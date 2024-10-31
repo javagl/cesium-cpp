@@ -33,7 +33,7 @@ void NullResourcePreparer::free(Cesium3DTilesSelection::Tile & /*tile*/,
 }
 
 void *NullResourcePreparer::prepareRasterInLoadThread(
-    CesiumGltf::ImageCesium & /*image*/,
+    CesiumGltf::ImageAsset & /*image*/,
     const std::any & /* rendererOptions */) {
   SPDLOG_TRACE("Called NullResourcePreparer::prepareRasterInLoadThread");
   return nullptr;

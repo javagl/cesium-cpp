@@ -2,6 +2,7 @@
 #include "CesiumNativeImpl/FileAssetAccessor.h"
 #include "CesiumNativeImpl/FileAssetRequest.h"
 
+#include <CesiumAsync/AsyncSystem.h>
 #include <CesiumAsync/IAssetAccessor.h>
 #include <CesiumAsync/IAssetRequest.h>
 

@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#define GLM_ENABLE_EXPERIMENTAL
+
 namespace CesiumCpp {
 
 namespace Common {

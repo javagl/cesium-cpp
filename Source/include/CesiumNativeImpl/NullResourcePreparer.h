@@ -8,7 +8,7 @@
 
 class Cesium3DTilesSelection::Tile;
 class CesiumRasterOverlays::RasterOverlayTile;
-class CesiumGltf::ImageCesium;
+class CesiumGltf::ImageAsset;
 class CesiumGltf::Model;
 class CesiumGeometry::Rectangle;
 
@@ -37,7 +37,7 @@ public:
   void free(Cesium3DTilesSelection::Tile &tile, void *pLoadThreadResult,
             void *pMainThreadResult) noexcept override;
 
-  void *prepareRasterInLoadThread(CesiumGltf::ImageCesium &image,
+  void *prepareRasterInLoadThread(CesiumGltf::ImageAsset &image,
                                   const std::any &rendererOptions) override;
 
   void *prepareRasterInMainThread(
