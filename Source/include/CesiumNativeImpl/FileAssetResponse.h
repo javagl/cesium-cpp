@@ -2,8 +2,6 @@
 
 #include <CesiumAsync/IAssetResponse.h>
 
-#include <gsl/span>
-
 #include <string>
 #include <vector>
 
@@ -36,7 +34,7 @@ public:
 
   std::string contentType() const noexcept override;
 
-  gsl::span<const std::byte> data() const noexcept override;
+  std::span<const std::byte> data() const noexcept override;
 
 private:
   std::string _fileName;

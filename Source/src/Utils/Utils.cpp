@@ -30,10 +30,13 @@ namespace CesiumCpp {
     }
 
 		Cesium3DTilesSelection::TilesetExternals createDefaultExternals() {
+      CesiumAsync::AsyncSystem asyncSystem{
+        std::make_shared<CesiumCpp::CesiumNativeImpl::SimpleTaskProcessorEx>(0, true)
+      };
 		  Cesium3DTilesSelection::TilesetExternals externals{
 			  std::make_shared<CesiumCpp::CesiumNativeImpl::FileAssetAccessor>(),
 			  std::make_shared<CesiumCpp::CesiumNativeImpl::NullResourcePreparer>(),
-			  std::make_shared<CesiumCpp::CesiumNativeImpl::SimpleTaskProcessorEx>(0, true)
+			  asyncSystem
 		  };
       return externals;
     }

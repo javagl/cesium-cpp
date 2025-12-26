@@ -2,6 +2,7 @@
 
 #include <CesiumAsync/IAssetAccessor.h>
 #include <CesiumAsync/IAssetRequest.h>
+#include <CesiumAsync/IAssetResponse.h>
 
 #include <functional>
 #include <string>

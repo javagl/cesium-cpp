@@ -1,6 +1,5 @@
 #include "CesiumNativeImpl/FileAssetResponse.h"
 
-#include <gsl/span>
 #include <spdlog/spdlog.h>
 
 #include <string>
@@ -27,8 +26,8 @@ std::string FileAssetResponse::contentType() const noexcept {
   return _contentType;
 }
 
-gsl::span<const std::byte> FileAssetResponse::data() const noexcept {
-  return gsl::span<const std::byte>(_fileData.data(), _fileData.size());
+std::span<const std::byte> FileAssetResponse::data() const noexcept {
+  return std::span<const std::byte>(_fileData.data(), _fileData.size());
 }
 
 } // namespace CesiumNativeImpl
